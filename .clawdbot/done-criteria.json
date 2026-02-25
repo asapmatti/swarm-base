@@ -1,0 +1,14 @@
+{
+  "required": [
+    "prCreated",
+    "noMergeConflicts",
+    "ciPassed",
+    "claudeReviewPassed",
+    "geminiReviewPassed"
+  ],
+  "optional": [
+    "screenshotIncluded"
+  ],
+  "screenshotRequiredFor": ["src/app", "src/components"],
+  "maxRespawnAttempts": 3
+}

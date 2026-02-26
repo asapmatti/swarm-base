@@ -2,13 +2,19 @@ name: Claude Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number to review
+        required: true
+        default: "1"
 
 jobs:
   review:
     name: Claude Reviewer
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     permissions:
       contents: read
       pull-requests: write
@@ -21,8 +27,9 @@ jobs:
       - name: Get PR diff
         id: diff
         run: |
-          git fetch origin ${{ github.base_ref }}
-          DIFF=$(git diff origin/${{ github.base_ref }}...HEAD -- . ':(exclude)package-lock.json' ':(exclude)*.lock')
+          BASE_REF="${{ github.base_ref || 'main' }}"
+          git fetch origin "$BASE_REF"
+          DIFF=$(git diff "origin/$BASE_REF"...HEAD -- . ':(exclude)package-lock.json' ':(exclude)*.lock')
           # Trim to 12000 chars to stay within API limits
           DIFF_TRIMMED="${DIFF:0:12000}"
           echo "diff<<EOF" >> $GITHUB_OUTPUT
@@ -58,7 +65,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr comment ${{ github.event.pull_request.number }} \
+          PR_NUM=${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+          gh pr comment "$PR_NUM" \
             --repo ${{ github.repository }} \
             --body "## 🤖 Claude Code Review
 

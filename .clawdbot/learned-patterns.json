@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "patterns": [],
+  "failures": [],
+  "hints": {
+    "global": [
+      "Always include relevant file paths upfront",
+      "End every prompt with the Definition of Done",
+      "Tell the agent to open a Pull Request (PR) with gh pr create --fill when done"
+    ],
+    "frontend": [
+      "Include an example of an existing component to follow",
+      "Specify which Tailwind classes are already in use"
+    ],
+    "backend": [
+      "Include the TypeScript type definitions for any data structures involved",
+      "Specify error handling expectations explicitly"
+    ],
+    "bugfix": [
+      "Include the exact error message or stack trace",
+      "Reference the file and line number if known",
+      "Ask the agent to add a test that would catch this regression"
+    ],
+    "docs": [
+      "Tell the agent to write for a non-technical reader",
+      "Push directly to main — no Pull Request (PR) needed for docs-only changes"
+    ]
+  },
+  "lastUpdated": null
+}

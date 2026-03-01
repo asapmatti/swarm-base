@@ -10,5 +10,5 @@
     "screenshotIncluded"
   ],
   "screenshotRequiredFor": ["src/app", "src/components"],
-  "maxRespawnAttempts": 3
+  "maxRespawnAttempts": 0
 }

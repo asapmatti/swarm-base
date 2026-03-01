@@ -1,20 +1,17 @@
 name: Claude Code Review
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
   workflow_dispatch:
     inputs:
-      pr_number:
-        description: PR number to review
-        required: true
-        default: "1"
+      disabled:
+        description: 'Workflow disabled - restore pull_request trigger to re-enable'
+        default: 'true'
 
 jobs:
   review:
     name: Claude Reviewer
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    if: false
     permissions:
       contents: read
       pull-requests: write
